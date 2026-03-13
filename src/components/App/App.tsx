@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useDebouncedCallback } from "use-debounce";
 
 import css from "./App.module.css";
@@ -25,6 +25,7 @@ export default function App() {
   const { data } = useQuery({
     queryKey: ["notes", page, search],
     queryFn: () => fetchNotes({ page, search }),
+    placeholderData: keepPreviousData, // ✅ безшовна пагінація
   });
 
   const notes = data?.notes ?? [];
